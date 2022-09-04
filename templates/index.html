@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>File upload</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <script src="{{url_for('static', filename='script.js')}}"></script>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/styles.css') }}">
+
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom bg-light">Files</div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/">Dashboard</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/profile">Profile</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/notes">Notes</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/logout">Logout</a>
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div class="container-fluid">
+                        <h1 class="" >Hello,</h1>  <h1 class="text-primary">  {{Username}}</h1>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="Profile">Profile</a>
+                                        <a class="dropdown-item" href="#!">settings</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="/logout">Logout</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Page content-->
+                <div class="container-fluid">
+                    <h1 class="mt-4"></h1>
+                    <p>Upload File : </p>
+                    <form action="uploader" method="post" enctype = "multipart/form-data">
+                       <input type="file" name="file"><br><br>
+                       <input type="submit"class="btn btn-primary" value="^Upload">
+                    </form>
+                    <br>
+                    <h5>Your Files : </h5>
+                    <table class="table">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col"> Date </th>
+                            <th scope="col">Options</th>
+                        </tr>
+                        <form action="/fileupdate" method="post">
+                           {% for item in files %}   
+                           <tr>
+                            <td>{{loop.index0+1}}</td>
+                           <<td name='filename'><a href="/uploads/{{ item['fileName']|safe }}">{{ item['fileName']|safe }}</a></td>
+                           <td> {{item['date']|safe}}</td>
+                           <td><div class="dropdown">
+
+                               <!-- <lable for="files">Options</lable> -->
+                               <select name="options"  id="options">
+                                <option value="--"></option>
+                               <option value="Download">Download</option>
+                                <option value="Update">Rename</option>
+                               <option value="delete">Delete</option>
+                               </select>
+                               <input type="submit" value="submit">
+                           </form>
+                            </div>                          
+                          </div></td>
+                           </tr>
+                           {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+    </body>
+</html>
